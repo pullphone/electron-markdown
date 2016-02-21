@@ -1,0 +1,3 @@
+export const ADD_MARKDOWN = 'ADD_MARKDOWN';
+export const DEL_MARKDOWN = 'DEL_MARKDOWN';
+export const UPDATE_MARKDOWN = 'UPDATE_MARKDOWN';

@@ -26,6 +26,9 @@ gulp.task('common-to-build', () => {
 // transpile for rendering process
 gulp.task('bundle', $.watchify(function(watchify) {
   return gulp.src(renderSrcDir + 'app.js')
+    .pipe($.plumber({
+      errorHandler: $.notify.onError('Error: <%= error.message %>')
+    }))
     .pipe(watchify({
       watch: common.isWatchify,
       debug: true,
