@@ -1,0 +1,33 @@
+{
+  "name": "electron-markdown",
+  "version": "0.1.0",
+  "description": "Markdown editor by made with electron",
+  "main": "build/main.js",
+  "applicationName": "Electron Markdown",
+  "scripts": {},
+  "keywords": [],
+  "author": "pullphone",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "electron-connect": "^0.3.7",
+    "electron-packager": "^5.2.1",
+    "gulp": "^3.9.1",
+    "gulp-if": "^2.0.0",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.2",
+    "gulp-useref": "^3.0.6",
+    "gulp-watch": "^4.3.5",
+    "gulp-watchify": "^0.5.0",
+    "lodash": "^4.5.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "vinyl-buffer": "^1.0.0",
+    "watchify": "^3.7.0"
+  }
+}
