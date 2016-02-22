@@ -1,11 +1,11 @@
 import * as MarkdownList from '../constants/MarkdownList';
 
-export function add(title, data) {
+export function add(title, content) {
   return {
     type: MarkdownList.ADD_MARKDOWN,
-    date: Date.now(),
+    date: new Date(),
     title,
-    data,
+    content,
   };
 }
 
@@ -16,11 +16,27 @@ export function del(id) {
   };
 }
 
-export function update(id, title, data) {
+export function update(id, title, content) {
   return {
     type: MarkdownList.UPDATE_MARKDOWN,
+    date: new Date(),
     id,
     title,
-    data,
+    content,
+  };
+}
+
+export function select(id) {
+  return {
+    type: MarkdownList.SELECT_CURRENT_MARKDOWN,
+    id,
+  };
+}
+
+export function updateSelected(key, value) {
+  return {
+    type: MarkdownList.UPDATE_CURRENT_MARKDOWN,
+    key,
+    value,
   };
 }

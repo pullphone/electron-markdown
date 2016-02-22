@@ -10,6 +10,8 @@ import * as MarkdownActions from '../actions/Markdown';
 
 import TopBar from '../components/TopBar';
 import MarkdownList from '../components/MarkdownList';
+import MarkdownEdit from '../components/MarkdownEdit';
+import MarkdownPreview from '../components/MarkdownPreview';
 
 export default class Root extends Component {
   constructor(props) {
@@ -22,7 +24,7 @@ export default class Root extends Component {
 
   render() {
     const mainStyle = {
-      height: 'calc(100% - 64px - 34px)',
+      height: 'calc(100% - 64px)',
       paddingTop: '2px',
       paddingRight: '16px',
       paddingBottom: '2px'
@@ -36,21 +38,15 @@ export default class Root extends Component {
           </div>
         </div>
 
-        <div className="row" style={{height: '34px'}}>
-          <div className="col-md-4">
-            <button className="btn btn-primary">Save</button>
-          </div>
-        </div>
-
         <div className="row" style={mainStyle}>
           <div className="col-md-2" style={{height: '100%', overflow: 'scroll'}}>
             <MarkdownList {...this.props} />
           </div>
           <div className="col-md-5" style={{height: '100%', overflow: 'hidden'}}>
-            <textarea style={{height: '100%', width: '100%'}}></textarea>
+            <MarkdownEdit {...this.props} />
           </div>
           <div className="col-md-5" style={{height: '100%', border: '1px solid #000', overflow: 'scroll'}}>
-            <div style={{height: 10000}}></div>
+            <MarkdownPreview {...this.props} />
           </div>
         </div>
       </div>
