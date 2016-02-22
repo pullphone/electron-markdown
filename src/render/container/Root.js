@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import __ from 'underscore';
 import { Grid, Row, Col } from 'react-bootstrap'
 
+const WebFrame = require('electron').webFrame;
+
 import * as MarkdownActions from '../actions/Markdown';
 
 import TopBar from '../components/TopBar';
@@ -14,20 +16,43 @@ export default class Root extends Component {
     super(props);
   }
 
-  render() {
-    return (
-      <div style={{overflow: 'hidden'}}>
-      <Grid fluid={true}>
-        <Row>
-          <Col md={12}><TopBar {...this.props} /></Col>
-        </Row>
+  componentWillMount() {
+    WebFrame.setZoomLevelLimits(1, 1);
+  }
 
-        <Row>
-          <Col md={2} key="list1"><MarkdownList {...this.props} /></Col>
-          <Col md={5} key="list2"><MarkdownList {...this.props} /></Col>
-          <Col md={5} key="list3"><MarkdownList {...this.props} /></Col>
-        </Row>
-      </Grid>
+  render() {
+    const mainStyle = {
+      height: 'calc(100% - 64px - 34px)',
+      paddingTop: '2px',
+      paddingRight: '16px',
+      paddingBottom: '2px'
+    };
+
+    return (
+      <div style={{height: '100%'}}>
+        <div className="row" style={{height: '64px'}}>
+          <div className="col-md-12">
+            <TopBar {...this.props} />
+          </div>
+        </div>
+
+        <div className="row" style={{height: '34px'}}>
+          <div className="col-md-4">
+            <button className="btn btn-primary">Save</button>
+          </div>
+        </div>
+
+        <div className="row" style={mainStyle}>
+          <div className="col-md-2" style={{height: '100%', overflow: 'scroll'}}>
+            <MarkdownList {...this.props} />
+          </div>
+          <div className="col-md-5" style={{height: '100%', overflow: 'hidden'}}>
+            <textarea style={{height: '100%', width: '100%'}}></textarea>
+          </div>
+          <div className="col-md-5" style={{height: '100%', border: '1px solid #000', overflow: 'scroll'}}>
+            <div style={{height: 10000}}></div>
+          </div>
+        </div>
       </div>
     );
   }

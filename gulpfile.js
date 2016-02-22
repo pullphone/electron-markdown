@@ -33,6 +33,7 @@ gulp.task('bundle', $.watchify(function(watchify) {
       watch: common.isWatchify,
       debug: true,
       verbose: true,
+      ignoreMissing: true,
       transform: ['babelify'],
     }))
     .pipe(buffer())
@@ -75,7 +76,11 @@ gulp.task('html:debug', () => {
     .pipe(gulp.dest(buildDir));
 });
 
-gulp.task('debug', ['bundle', 'compile', 'html:debug'], () => {
+gulp.task('html:debug:watch', ['html:debug'], () => {
+  gulp.watch(renderSrcDir + 'index.html', ['html:debug']);
+});
+
+gulp.task('debug', ['bundle', 'compile', 'html:debug:watch'], () => {
   var electron = electronServer.create();
   electron.start();
   $.watch(buildDir + 'main.js', electron.restart);
