@@ -5,9 +5,19 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import { SelectableContainerEnhance } from 'material-ui/lib/hoc/selectable-enhance';
 let SelectableList = SelectableContainerEnhance(List);
 
+const ipc = require('electron').ipcRenderer;
+
 export default class MarkdownList extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    ipc.on('menu-action', (event, command) => {
+      if (command == 'new') {
+        this.handleClickNewItem();
+      }
+    });
   }
 
   getFormattedDate(date) {

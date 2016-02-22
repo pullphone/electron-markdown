@@ -1,6 +1,15 @@
 import App from 'app';
 import BrowserWindow from 'browser-window';
+import Menu from 'menu';
+
 var mainWindow = null;
+var webContents = null;
+
+if (process.env.ENVIRONMENT == 'development') {
+  var menu = require('./menuDebug');
+} else {
+  var menu = require('./menu');
+}
 
 App.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
@@ -16,6 +25,8 @@ App.on('ready', function() {
     minHeight: 600,
     center: true,
   });
+  webContents = mainWindow.webContents;
+  Menu.setApplicationMenu(menu.get(webContents));
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   mainWindow.on('closed', function() {

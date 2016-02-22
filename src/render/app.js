@@ -6,7 +6,6 @@ injectTapEventPlugin();
 
 import store from './store';
 import Root from './container/Root';
-import createMenu from './menu';
 
 render(
     <Provider store={store}>
@@ -14,5 +13,3 @@ render(
     </Provider>,
     document.getElementById('app')
 );
-
-createMenu(store);

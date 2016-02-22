@@ -5,6 +5,8 @@ var electronServer = require('electron-connect').server;
 var fs = require('fs');
 var packager = require('electron-packager');
 var packageJson = require('./package.json');
+var babelify = require('babelify');
+var envify = require('envify/custom');
 
 var renderSrcDir = 'src/render/';
 var browserSrcDir = 'src/browser/';
@@ -16,11 +18,13 @@ var common = {
   isWatchify: true,
   isUglify: false,
   dest: buildDir,
+  env: 'development',
 };
 gulp.task('common-to-build', () => {
   common.isWatchify = false;
   common.isUglify = true;
   common.dest = distDir;
+  common.env = 'production';
 });
 
 // transpile for rendering process
@@ -32,7 +36,6 @@ gulp.task('bundle', $.watchify(function(watchify) {
     .pipe(watchify({
       watch: common.isWatchify,
       debug: true,
-      verbose: true,
       ignoreMissing: true,
       transform: ['babelify'],
     }))
@@ -47,11 +50,13 @@ gulp.task('bundle:build', ['common-to-build', 'bundle']);
 
 // es6 to 5 for browser process
 gulp.task('compile', $.watchify(function(watchify) {
+  var envs = $.env.set({ENVIRONMENT: common.env});
+
   return gulp.src(browserSrcDir + 'main.js')
+    .pipe(envs)
     .pipe(watchify({
       watch: common.isWatchify,
       debug: true,
-      verbose: true,
       transform: ['babelify'],
       ignoreMissing: true,
       detectGlobals: false,

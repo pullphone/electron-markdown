@@ -2,12 +2,22 @@ import React, { Component, PropTypes } from 'react';
 import { Dialog, FlatButton, RaisedButton } from 'material-ui';
 import __ from 'underscore';
 
+const ipc = require('electron').ipcRenderer;
+
 export default class MarkdownEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
       deleteDialog: false,
     }
+  }
+
+  componentWillMount() {
+    ipc.on('menu-action', (event, command) => {
+      if (command == 'save') {
+        this.saveSelectedMarkdown();
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -20,11 +30,21 @@ export default class MarkdownEdit extends Component {
     }
 
     if (thisSelected.id !== nextSelected.id) {
-      // list にあるデータと変わってたら保存
-      const stateData = nextProps.markdownList.list[thisSelected.id];
-      if (thisSelected.title != stateData.title || thisSelected.content != stateData.content) {
-        markdownActions.update(thisSelected.id, thisSelected.title, thisSelected.content);
-      }
+      this.saveSelectedMarkdown()
+    }
+  }
+
+  saveSelectedMarkdown() {
+    const { markdownList, markdownActions } = this.props;
+    const { selected } = markdownList;
+    if (selected === undefined) {
+      return;
+    }
+
+    const stateData = markdownList.list[selected.id];
+    // list にあるデータと変わってたら保存
+    if (selected.title != stateData.title || selected.content != stateData.content) {
+      markdownActions.update(selected.id, selected.title, selected.content);
     }
   }
 

@@ -1,26 +1,20 @@
-import electron from 'electron';
+import Menu from 'menu';
+import App from 'app';
 
-import * as MarkdownActions from './actions/Markdown';
-
-const remote = electron.remote;
-const Menu = remote.Menu;
-const processName = remote.app.getName();
-
-export default function createMenu(store) {
-  const menu = Menu.buildFromTemplate([
+export function get(webContents) {
+  return Menu.buildFromTemplate([
     {
       label: 'File',
       submenu: [
         {label: 'New', accelerator: 'CmdOrCtrl+N', click: () => {
-          store.dispatch(MarkdownActions.add('new', 'new content'));
+          webContents.send('menu-action', 'new');
         }},
         {label: 'Save', accelerator: 'CmdOrCtrl+S', click: () => {
-          const selected = store.getState().markdownList.selected;
-          store.dispatch(MarkdownActions.update(selected.id, selected.title, selected.content));
+          webContents.send('menu-action', 'save');
         }},
         {type: 'separator'},
         {label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: () => {
-          remote.app.quit();
+          App.quit();
         }},
       ],
     },
@@ -70,5 +64,4 @@ export default function createMenu(store) {
       ]
     },
   ]);
-  Menu.setApplicationMenu(menu);
 }
