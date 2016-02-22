@@ -5,7 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 import store from './store';
-import Root from './container/Root';
+import Root from './container/Root.jsx';
 
 render(
     <Provider store={store}>

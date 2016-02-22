@@ -7,10 +7,10 @@ const WebFrame = require('electron').webFrame;
 
 import * as MarkdownActions from '../actions/Markdown';
 
-import TopBar from '../components/TopBar';
-import MarkdownList from '../components/MarkdownList';
-import MarkdownEdit from '../components/MarkdownEdit';
-import MarkdownPreview from '../components/MarkdownPreview';
+import TopBar from '../components/TopBar.jsx';
+import MarkdownList from '../components/MarkdownList.jsx';
+import MarkdownEdit from '../components/MarkdownEdit.jsx';
+import MarkdownPreview from '../components/MarkdownPreview.jsx';
 
 export default class Root extends Component {
   constructor(props) {
