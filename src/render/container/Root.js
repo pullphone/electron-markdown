@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import __ from 'underscore';
-import { Grid, Row, Col } from 'react-bootstrap'
 
 const WebFrame = require('electron').webFrame;
 

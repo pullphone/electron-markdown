@@ -5,8 +5,6 @@ var electronServer = require('electron-connect').server;
 var fs = require('fs');
 var packager = require('electron-packager');
 var packageJson = require('./package.json');
-var babelify = require('babelify');
-var envify = require('envify/custom');
 
 var renderSrcDir = 'src/render/';
 var browserSrcDir = 'src/browser/';
