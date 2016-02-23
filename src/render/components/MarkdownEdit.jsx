@@ -16,6 +16,8 @@ export default class MarkdownEdit extends Component {
     ipc.on('menu-action', (event, command) => {
       if (command == 'save') {
         this.saveSelectedMarkdown();
+      } else if (command == 'delete') {
+        this.handleClickDelete();
       }
     });
   }
@@ -56,6 +58,12 @@ export default class MarkdownEdit extends Component {
   }
 
   handleClickDelete() {
+    const { markdownList } = this.props;
+    const { selected } = markdownList;
+    if (selected == undefined) {
+      return;
+    }
+
     this.setState({
       deleteDialog: true,
     });

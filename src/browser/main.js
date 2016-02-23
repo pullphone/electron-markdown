@@ -5,12 +5,6 @@ import Menu from 'menu';
 var mainWindow = null;
 var webContents = null;
 
-if (process.env.ENVIRONMENT == 'development') {
-  var menu = require('./menuDebug');
-} else {
-  var menu = require('./menu');
-}
-
 App.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
     app.quit();
@@ -26,7 +20,8 @@ App.on('ready', function() {
     center: true,
   });
   webContents = mainWindow.webContents;
-  Menu.setApplicationMenu(menu.get(webContents));
+  var menuItems = require('./menu');
+  Menu.setApplicationMenu(menuItems.get(process.env.ENVIRONMENT, webContents));
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   mainWindow.on('closed', function() {

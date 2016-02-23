@@ -10,6 +10,11 @@ const ipc = require('electron').ipcRenderer;
 export default class MarkdownList extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      list: [],
+      currentIndex: 0,
+    };
   }
 
   componentWillMount() {
@@ -17,6 +22,41 @@ export default class MarkdownList extends Component {
       if (command == 'new') {
         this.handleClickNewItem();
       }
+    });
+
+    const { markdownList } = this.props;
+    this.generateList(markdownList.list);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { markdownList } = this.props;
+    const nextMarkdownList = nextProps.markdownList;
+    const thisList = markdownList.list;
+    const nextList = nextMarkdownList.list;
+
+    if (thisList !== nextList) {
+      this.generateList(nextList);
+    }
+  }
+
+  generateList(list) {
+    const { markdownList } = this.props;
+    const { selected } = markdownList;
+    let selectedIndex = 0;
+    const listArr = __.map(list, (data, id) => {
+      return data;
+    });
+    listArr.reverse();
+
+    __.each(listArr, (data, index) => {
+      if (data.id == selected.id) {
+        selectedIndex = index;
+      }
+    });
+
+    this.setState({
+      list: listArr,
+      currentIndex: selectedIndex,
     });
   }
 
@@ -68,15 +108,9 @@ export default class MarkdownList extends Component {
   }
 
   render() {
-    const { markdownList } = this.props;
-    const list = markdownList.list;
-    const listArr = __.map(list, (data, id) => {
-      return Object.assign({}, data, {id});
-    });
-
     return (
       <SelectableList {...this.getListProps()}>
-        {listArr.map(md => {
+        {this.state.list.map(md => {
           return (
             <ListItem {...this.getListItemProps(md)} />
           );
